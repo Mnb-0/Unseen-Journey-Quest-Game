@@ -1,96 +1,67 @@
 #include <iostream>
 #include <ncurses.h>
-
+#include "Cell.h"
 using namespace std;
 
-class Cell
+class Maze
 {
-public:
-    Cell *right;
-    Cell *left;
-    Cell *up;
-    Cell *down;
-    char data;
-/* data used to represent different items:
- * '.' - empty space
- * '#' - wall
- * 'P' - player
- * 'B' - bomb
- * 'E' - exit
- * 'C' - coin
- */
-    Cell()
+    int size;
+    Cell* startUp;
+    Cell* endUp;
+    Cell* startDown;
+    Cell* endDown;
+    Cell* player;
+    
+    
+    public:
+    
+    Maze(): size(0), startUp(nullptr), endUp(nullptr), startDown(nullptr),endDown(nullptr),player(nullptr) {}
+    
+    //Maze is a multi-dimensional linked list of cells
+    Maze(int size)//Initializes maze
     {
-        right = nullptr;
-        left = nullptr;
-        up = nullptr;
-        down = nullptr;
-        data = '.';
+        this->size = size;
+        //Established the maze using four pointers at four corners of the maze
+        //Can travel in all four directions
+        startUp->right = endUp;
+        endUp->left = startUp;
+        startUp->down = startDown;
+        endUp->down = endDown;
+        startDown->right = endDown;
+        endDown->left = startDown;
+        startDown->up = startUp;
+        endDown->up = endUp;
+        player = startUp;
     }
 
-    Cell(char data)
+    //Insert a cell with data at a specific row and column
+    void insertCell(int row, int col, char data)
     {
-        right = nullptr;
-        left = nullptr;
-        up = nullptr;
-        down = nullptr;
-        this -> data = data;
-    }
-
-    void moveRight()
-    {
-        if(right != nullptr)
+        Cell* temp = new Cell(data);
+        Cell* current = startUp;
+        for(int i = 0; i < row; i++)
         {
-            data = '.';
-            right -> data = 'P';
+            current = current->down;
         }
-    }
-
-    void moveLeft()
-    {
-        if(left != nullptr)
+        for(int i = 0; i < col; i++)
         {
-            data = '.';
-            left -> data = 'P';
+            current = current->right;
         }
+        //Have to add links
+        temp->right = current->right;
+        temp->left = current;
+        current->right->left = temp;
+        current->right = temp;
     }
-
-    void moveUp()
-    {
-        if(up != nullptr)
-        {
-            data = '.';
-            up -> data = 'P';
-        }
-    }
-
-    void moveDown()
-    {
-        if(down != nullptr)
-        {
-            data = '.';
-            down -> data = 'P';
-        }
-    }
-
-    bool checkEdge() const
-    {
-        if(right == nullptr || left == nullptr || up == nullptr || down == nullptr)
-        {
-            return true;
-        }
-        return false;
-    }
-
-
 };
 
 int main()
 {
-    initscr(); // Start ncurses mode
+    //initscr(); // Start ncurses mode
     // printw("Hello!");
     // refresh();               // Print it on to the real screen
     // getch();                 // Wait for user input
-    endwin(); // End ncurses mode
+    //endwin(); // End ncurses mode
+
     return 0;
 }

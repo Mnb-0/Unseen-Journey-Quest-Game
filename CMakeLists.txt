@@ -14,7 +14,9 @@ find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
 # Add the executable
-add_executable(DSA_2 main.cpp)
+add_executable(DSA_2 main.cpp
+        Cell.cpp
+        Cell.h)
 
 # Link the ncurses library
 target_link_libraries(DSA_2 ${CURSES_LIBRARIES})
