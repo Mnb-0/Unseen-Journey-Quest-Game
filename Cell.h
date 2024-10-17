@@ -28,4 +28,4 @@ public:
     bool checkEdge() const;
 };
 
-#endif //DSA_2_CELL_H
+#endif // DSA_2_CELL_H
