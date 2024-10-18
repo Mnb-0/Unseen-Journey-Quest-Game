@@ -1,7 +1,11 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "Cell.h"
-//#include <ncurses>
+#include <ncurses.h>
 using namespace std;
+
+int randomNumberGenerator(int, int); // Generates a random number between x and y
 
 class Maze
 {
@@ -12,7 +16,7 @@ class Maze
 public:
     Maze() : size(0), startUp(nullptr), endDown(nullptr) {}
 
-    //maze creation and linking
+    // maze creation and linking
     void createMaze()
     {
         startUp = nullptr;
@@ -34,7 +38,7 @@ public:
                         startUp = rowHead;
                 }
 
-                //Link horizontally (left-right)
+                // Link horizontally (left-right)
                 if (prevCol)
                 {
                     prevCol->right = newCell;
@@ -42,7 +46,7 @@ public:
                 }
                 prevCol = newCell;
 
-                //Link vertically (up-down)
+                // Link vertically (up-down)
                 if (i > 0 && prevRow)
                 {
                     Cell *above = prevRow;
@@ -78,18 +82,21 @@ public:
             return;
         }
 
-        createMaze(); //Initialize the maze grid
+        createMaze(); // Initialize the maze grid
+        // Arrays to store x y coordinates of coins
+        int coinLocX[5];
+        int coinLocY[5];
 
         for (int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
             {
-                //Set walls on edges
+                // Set walls on edges
                 if (i == 0 || i == size - 1 || j == 0 || j == size - 1)
                 {
                     insertCell(i, j, '#');
                 }
-                //Set the player starting position
+                // Set the player starting position
                 else if (i == 1 && j == 1)
                 {
                     insertCell(i, j, 'P');
@@ -100,12 +107,27 @@ public:
                 }
             }
         }
+        for (int i = 0; i < 5; i++)
+        {
+            //no coins at spawn point
+            coinLocX[i] = randomNumberGenerator(1, size - 2);
+            coinLocY[i] = randomNumberGenerator(1, size - 2);
+            // put coins at coordinates if coin already not there
+            if (startUp->data != 'C' && startUp->data != 'P')
+            {
+                insertCell(coinLocX[i], coinLocY[i], 'C');
+            }
+            else
+            {
+                i--;
+            }
+        }
     }
 
-    //Insert data at a specific row and column
+    // Insert data at a specific row and column
     void insertCell(int row, int col, char data)
     {
-        //travel to specified row & col
+        // travel to specified row & col
         Cell *current = startUp;
         for (int i = 0; i < row; i++)
         {
@@ -141,11 +163,18 @@ public:
 
 int main()
 {
+    srand(static_cast<unsigned>(time(0)));
     Maze maze;
     cout << "Enter level:\n";
     int lvl;
     cin >> lvl;
     maze.levelSet(lvl);
     maze.printMaze();
+
     return 0;
+}
+
+int randomNumberGenerator(int x, int y)
+{
+    return x + rand() % (y - x + 1);
 }
