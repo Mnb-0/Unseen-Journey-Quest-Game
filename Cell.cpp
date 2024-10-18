@@ -10,6 +10,7 @@ Cell::Cell()
     left = nullptr;
     up = nullptr;
     down = nullptr;
+    key = coin = bomb = false;
     data = '.';
 }
 
@@ -20,6 +21,7 @@ Cell::Cell(char data)
     left = nullptr;
     up = nullptr;
     down = nullptr;
+    key = coin = bomb = false;
     this->data = data;
 }
 

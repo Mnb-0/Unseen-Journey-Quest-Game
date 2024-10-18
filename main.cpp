@@ -1,147 +1,22 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
-// #include <ncurses.h>
 #include "Cell.h"
+//#include <ncurses>
 using namespace std;
 
-int distance(Cell *start, Cell *end)
-{
-    //work in progress. BFS or DFS?
-}
-
-
-
-class Player
-{
-    Cell *currentCell;
-    int score;
-    int movesRem;
-    int undoRem;
-    bool keyFound;
-
-public:
-    Player(Cell *start, int level) : currentCell(start), score(0), keyFound(false) 
-    {
-        if(level == 1)
-        {
-            movesRem = 10;
-            undoRem = 3;
-        }
-        else if(level == 2)
-        {
-            movesRem = 15;
-            undoRem = 5;
-        }
-        else if(level == 3)
-        {
-            movesRem = 20;
-            undoRem = 7;
-        }
-    }
-
-    void moveRight()
-    {
-        if (currentCell->right != nullptr)
-        {
-            currentCell = currentCell->right;
-            if (currentCell->data == 'C')
-            {
-                score++;
-            }
-            movesRem--;
-        }
-    }
-
-    void moveLeft()
-    {
-        if (currentCell->left != nullptr)
-        {
-            currentCell = currentCell->left;
-            if (currentCell->data == 'C')
-            {
-                score++;
-            }
-            movesRem--;
-        }
-    }
-
-    void moveUp()
-    {
-        if (currentCell->up != nullptr)
-        {
-            currentCell = currentCell->up;
-            if (currentCell->data == 'C')
-            {
-                score++;
-            }
-            movesRem--;
-        }
-    }
-
-    void moveDown()
-    {
-        if (currentCell->down != nullptr)
-        {
-            currentCell = currentCell->down;
-            if (currentCell->data == 'C')
-            {
-                score++;
-            }
-            movesRem--;
-        }
-    }
-
-    void undoMove()
-    {
-        if (undoRem > 0)
-        {
-            currentCell = currentCell->up;
-            score--;
-            movesRem++;
-            undoRem--;
-        }
-    }
-
-    void collectKey()
-    {
-        keyFound = true;
-    }
-
-    void printStats()
-    {
-        cout << "Score: " << score << endl;
-        cout << "Moves Remaining: " << movesRem << endl;
-        cout << "Undos Remaining: " << undoRem << endl;
-        cout << "Key Found: " << (keyFound ? "Yes" : "No") << endl;
-    }
-};
 class Maze
 {
-    int size;        // Size of the maze (n x n grid)
-    Cell *startUp;   // Top-left corner
-    Cell *endUp;     // Top-right corner
-    Cell *startDown; // Bottom-left corner
-    Cell *endDown;   // Bottom-right corner
-    Cell *player;    // Player's position in the maze
+    int size;
+    Cell *startUp;
+    Cell *endDown;
 
 public:
-    Maze() : size(0), startUp(nullptr), endUp(nullptr), startDown(nullptr), endDown(nullptr), player(nullptr) {}
+    Maze() : size(0), startUp(nullptr), endDown(nullptr) {}
 
-    // Parameterized constructor
-    Maze(int size)
+    //maze creation and linking
+    void createMaze()
     {
-        this->size = size;
-        startUp = createMaze();
-        player = startUp;
-    }
-
-    // Maze is a 2D grid of linked cells
-    Cell *createMaze()
-    {
-        Cell *rowStart = nullptr;
+        startUp = nullptr;
         Cell *prevRow = nullptr;
-        Cell *current = nullptr;
 
         for (int i = 0; i < size; i++)
         {
@@ -154,43 +29,80 @@ public:
 
                 if (j == 0)
                 {
-
                     rowHead = newCell;
                     if (i == 0)
                         startUp = rowHead;
                 }
 
+                //Link horizontally (left-right)
                 if (prevCol)
                 {
-
                     prevCol->right = newCell;
                     newCell->left = prevCol;
                 }
                 prevCol = newCell;
 
-                if (i > 0)
+                //Link vertically (up-down)
+                if (i > 0 && prevRow)
                 {
+                    Cell *above = prevRow;
+                    for (int k = 0; k < j; k++)
+                        above = above->right;
 
-                    current->down = newCell;
-                    newCell->up = current;
-                    current = current->right;
-                }
-
-                if (i == size - 1 && j == size - 1)
-                {
-                    endDown = newCell;
+                    above->down = newCell;
+                    newCell->up = above;
                 }
             }
 
-            prevRow = rowStart;
-            rowStart = rowHead;
-            current = rowHead;
+            prevRow = rowHead;
         }
-
-        return startUp;
     }
 
-    // Insert data at a specific row and column
+    void levelSet(int lvl)
+    {
+        if (lvl == 1)
+        {
+            size = 10;
+        }
+        else if (lvl == 2)
+        {
+            size = 15;
+        }
+        else if (lvl == 3)
+        {
+            size = 20;
+        }
+        else
+        {
+            cout << "Invalid level\n";
+            return;
+        }
+
+        createMaze(); //Initialize the maze grid
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                //Set walls on edges
+                if (i == 0 || i == size - 1 || j == 0 || j == size - 1)
+                {
+                    insertCell(i, j, '#');
+                }
+                //Set the player starting position
+                else if (i == 1 && j == 1)
+                {
+                    insertCell(i, j, 'P');
+                }
+                else
+                {
+                    insertCell(i, j, '.');
+                }
+            }
+        }
+    }
+
+    //Insert data at a specific row and column
     void insertCell(int row, int col, char data)
     {
         //travel to specified row & col
@@ -201,17 +113,15 @@ public:
                 current = current->down;
         }
 
-
         for (int j = 0; j < col; j++)
         {
             if (current->right != nullptr)
                 current = current->right;
         }
         current->data = data;
-        //this was originally going to be a node insertion function but I realized it was not needed
     }
 
-    //visualization
+    // visualization
     void printMaze()
     {
         Cell *row = startUp;
@@ -231,21 +141,11 @@ public:
 
 int main()
 {
-    // initscr(); // Start ncurses mode
-    //  printw("Hello!");
-    //  refresh();               // Print it on to the real screen
-    //  getch();                 // Wait for user input
-    // endwin(); // End ncurses mode
-    // Main to test maze class
-    Maze maze(5);
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 5; j++)
-        {
-            maze.insertCell(i, j, '.');
-        }
-    }
-
+    Maze maze;
+    cout << "Enter level:\n";
+    int lvl;
+    cin >> lvl;
+    maze.levelSet(lvl);
     maze.printMaze();
     return 0;
 }

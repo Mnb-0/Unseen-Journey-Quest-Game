@@ -12,6 +12,9 @@ public:
     Cell *left;
     Cell *up;
     Cell *down;
+    bool bomb;
+    bool coin;
+    bool key;
     char data;
 
     // Constructors
