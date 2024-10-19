@@ -3,7 +3,8 @@
 
 #include "Cell.h"
 
-class Maze {
+class Maze
+{
     int size;
     Cell *startUp;
     Cell *endDown;
