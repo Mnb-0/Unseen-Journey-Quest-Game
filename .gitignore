@@ -1,3 +1,6 @@
 *.out
 *.exe
 *.vscode
+*.json
+/build
+/cmake-build-debug
