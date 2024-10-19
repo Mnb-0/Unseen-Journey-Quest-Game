@@ -116,6 +116,36 @@ void Maze::placeEntity(char entity, int count)
     }
 }
 
+void Maze::setCells()
+{
+    Cell *temp = startUp;
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if(temp->data == 'B')
+            {
+                temp->bomb = true;
+                insertCell(i, j, '.');
+            }
+            else if(temp->data == 'C')
+            {
+                temp->coin = true;
+            }
+            else if(temp->data == 'K')
+            {
+                temp->key = true;
+                insertCell(i, j, '.');
+            }
+            else if(temp->data == 'E')
+            {
+                temp->exit = true;
+                insertCell(i, j, '.');
+            }
+        }
+    }
+}
+
 void Maze::addCoins()
 {
     placeEntity('C', 5);
@@ -150,6 +180,11 @@ void Maze::insertCell(int row, int col, char data)
             current = current->right;
     }
     current->data = data;
+}
+
+Cell *Maze::getStartUp()
+{
+    return this->startUp;
 }
 
 void Maze::printMaze()

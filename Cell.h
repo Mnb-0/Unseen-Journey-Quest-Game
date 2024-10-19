@@ -15,6 +15,7 @@ public:
     bool bomb;
     bool coin;
     bool key;
+    bool exit;
     char data;
 
     // Constructors

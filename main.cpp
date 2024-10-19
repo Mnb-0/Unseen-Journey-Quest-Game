@@ -8,6 +8,8 @@
 
 using namespace std;
 
+//start working on move stack
+
 class Player
 {
     Cell *playerCurrent;

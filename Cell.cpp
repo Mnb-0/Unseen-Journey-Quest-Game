@@ -10,8 +10,9 @@ Cell::Cell()
     left = nullptr;
     up = nullptr;
     down = nullptr;
-    key = coin = bomb = false;
+    exit = key = coin = bomb = false;
     data = '.';
+    
 }
 
 // Constructor with character parameter
@@ -21,7 +22,7 @@ Cell::Cell(char data)
     left = nullptr;
     up = nullptr;
     down = nullptr;
-    key = coin = bomb = false;
+    exit = key = coin = bomb = false;
     this->data = data;
 }
 

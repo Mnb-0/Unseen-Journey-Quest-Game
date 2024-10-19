@@ -20,7 +20,9 @@ public:
     void addKey();
     void addExitDoor();
     void insertCell(int row, int col, char data);
+    void setCells();
     void printMaze();
+    Cell *getStartUp();
 };
 
 #endif
