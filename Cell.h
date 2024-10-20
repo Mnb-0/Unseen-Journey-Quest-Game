@@ -18,8 +18,10 @@ public:
     void moveUp();
     void moveDown();
 
-    
     bool checkEdge() const;
+    bool isBomb() const;
+    bool isExit() const;
+    bool isKey() const;
 };
 
 #endif // CELL_H

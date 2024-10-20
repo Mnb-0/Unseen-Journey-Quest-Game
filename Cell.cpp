@@ -59,8 +59,23 @@ void Cell::moveDown()
     }
 }
 
-// Check if the cell is an edge cell
+// check if the cell is an edge cell
 bool Cell::checkEdge() const
 {
     return right == nullptr || left == nullptr || up == nullptr || down == nullptr;
+}
+
+bool Cell::isBomb() const
+{
+    return bomb;
+}
+
+bool Cell::isExit() const
+{
+    return exit;
+}
+
+bool Cell::isKey() const
+{
+    return key;
 }
