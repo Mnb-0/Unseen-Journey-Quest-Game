@@ -1,8 +1,10 @@
 #include <iostream>
 #include <ctime>
 #include <ncurses.h>
+#include "Cell.h"
 #include "Maze.h"
 #include "Player.h"
+#include "Stack.h"
 
 int main()
 {
