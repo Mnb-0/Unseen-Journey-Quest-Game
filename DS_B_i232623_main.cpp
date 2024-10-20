@@ -1,11 +1,11 @@
 #include <iostream>
 #include <ctime>
 #include <ncurses.h>
-#include "Cell.h"
-#include "Maze.h"
-#include "Player.h"
-#include "Stack.h"
-#include "Util.h"
+#include "DS_B_i232623_Cell.h"
+#include "DS_B_i232623_Maze.h"
+#include "DS_B_i232623_Player.h"
+#include "DS_B_i232623_Stack.h"
+#include "DS_B_i232623_Util.h"
 
 // Function to display the player's current status
 void displayStatus(Player &player)

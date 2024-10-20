@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Maze.h"
+#include "DS_B_i232623_Maze.h"
 class Player
 {
 private:

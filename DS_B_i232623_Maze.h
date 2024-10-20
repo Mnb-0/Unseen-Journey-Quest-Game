@@ -1,7 +1,7 @@
 #ifndef MAZE_H
 #define MAZE_H
 
-#include "Cell.h"
+#include "DS_B_i232623_Cell.h"
 
 class Maze
 {

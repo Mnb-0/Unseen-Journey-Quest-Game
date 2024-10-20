@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <ncurses.h>
-#include "Maze.h"
-#include "Util.h"
+#include "DS_B_i232623_Maze.h"
+#include "DS_B_i232623_Util.h"
 
 Maze::Maze() : lvl(0),size(0), startUp(nullptr), endDown(nullptr) {}
 

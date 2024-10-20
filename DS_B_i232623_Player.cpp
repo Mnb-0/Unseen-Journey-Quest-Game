@@ -1,5 +1,5 @@
-#include "Player.h"
-#include "Maze.h"
+#include "DS_B_i232623_Player.h"
+#include "DS_B_i232623_Maze.h"
 
 Player::Player() : score(0), undos(3), moves(10), alive(true), hasKey(false) {}
 

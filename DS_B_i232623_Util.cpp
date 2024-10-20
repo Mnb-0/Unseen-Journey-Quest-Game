@@ -1,7 +1,7 @@
 #include <cstdlib>
-#include "Util.h"
+#include "DS_B_i232623_Util.h"
 #include <ncurses.h>
-#include "Player.h"
+#include "DS_B_i232623_Player.h"
 
 int randomNumberGenerator(int x, int y)
 {
