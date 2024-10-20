@@ -60,7 +60,7 @@ This section explains how to install the necessary dependencies and set up the p
 
 3. Compile the project:
    ```bash
-   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp -lncurses -o maze_game
+   g++ DS_B_i232623_main.cpp DS_B_i232623_Cell.cpp DS_B_i232623_Maze.cpp DS_B_i232623_Player.cpp DS_B_i232623_Stack.cpp DS_B_i232623_Util.cpp -lncurses -o maze_game
    ```
 
 4. Run the game:
@@ -156,3 +156,22 @@ The project is organized as follows:
 └── README.md          # Project documentation
 
 ```
+
+## Screenshots
+
+Here are some screenshots of the game in action:
+
+### Screenshot 1
+![Screenshot 1](screenshots/selectLevel.JPG)
+
+### Screenshot 2
+![Screenshot 2](screenshots/levelOne.JPG)
+
+### Screenshot 3
+![Screenshot 3](screenshots/levelTwo.JPG)
+
+### Screenshot 4
+![Screenshot 4](screenshots/levelThree.JPG)
+
+### Screenshot 5
+![Screenshot 5](screenshots/gameOver.JPG)
