@@ -1,5 +1,5 @@
-#include "Util.h"
 #include <cstdlib>
+#include "Util.h"
 
 int randomNumberGenerator(int x, int y)
 {
@@ -11,4 +11,10 @@ char toLowerCase(char c)
     if (c >= 'A' && c <= 'Z')
         return c + 32;
     return c;
+}
+
+void abs(int &x)
+{
+    if (x < 0)
+        x = -x;
 }

@@ -1,9 +1,5 @@
-//
-// Created by Muneeb on 10/16/2024.
-//
-
 #include "Cell.h"
-// Default constructor
+
 Cell::Cell()
 {
     right = nullptr;
@@ -12,10 +8,8 @@ Cell::Cell()
     down = nullptr;
     exit = key = coin = bomb = false;
     data = '.';
-    
 }
 
-// Constructor with character parameter
 Cell::Cell(char data)
 {
     right = nullptr;
@@ -26,52 +20,47 @@ Cell::Cell(char data)
     this->data = data;
 }
 
-// Move player to the right cell
+// right cell
 void Cell::moveRight()
 {
-    if (right != nullptr)
+    if (right != nullptr && right->data != '#') // prevent out of bounds move
     {
-        data = '.';
         right->data = 'P';
+        data = '.';
     }
 }
 
-// Move player to the left cell
+// left cell
 void Cell::moveLeft()
 {
-    if (left != nullptr)
+    if (left != nullptr && left->data != '#') // prevent out of bounds move
     {
-        data = '.';
         left->data = 'P';
+        data = '.';
     }
 }
 
-// Move player to the up cell
+// up cell
 void Cell::moveUp()
 {
-    if (up != nullptr)
+    if (up != nullptr && up->data != '#') // prevent out of bounds move
     {
-        data = '.';
         up->data = 'P';
+        data = '.';
     }
 }
 
-// Move player to the down cell
 void Cell::moveDown()
 {
-    if (down != nullptr)
+    if (down != nullptr && down->data != '#') // prevent out of bounds move
     {
-        data = '.';
         down->data = 'P';
+        data = '.';
     }
 }
 
-// Check if the cell is at an edge
+// Check if the cell is an edge cell
 bool Cell::checkEdge() const
 {
-    if (right == nullptr || left == nullptr || up == nullptr || down == nullptr)
-    {
-        return true;
-    }
-    return false;
+    return right == nullptr || left == nullptr || up == nullptr || down == nullptr;
 }

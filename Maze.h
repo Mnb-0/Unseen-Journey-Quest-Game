@@ -5,24 +5,27 @@
 
 class Maze
 {
+private:
     int size;
-    Cell *startUp;
-    Cell *endDown;
+    Cell *startUp, *endDown;
 
-public:
-    Maze();
     void createMaze();
     void initializeMaze();
-    void levelSet(int lvl);
-    void placeEntity(char entity, int count);
     void addCoins();
     void addBombs();
     void addKey();
     void addExitDoor();
+    void place(char entity, int count);
     void insertCell(int row, int col, char data);
-    void setCells();
+
+public:
+    Maze();
+    void levelSet(int lvl);
     void printMaze();
     Cell *getStartUp();
+    int manhattanDistance(char entity1, char entity2);
+    void findEntity(char entity, int &row, int &col);
+    Cell *findPlayer();
 };
 
-#endif
+#endif // MAZE_H

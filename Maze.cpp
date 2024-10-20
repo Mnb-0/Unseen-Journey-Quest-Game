@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <iostream>
 #include <ncurses.h>
 #include "Maze.h"
 #include "Util.h"
@@ -25,7 +27,7 @@ void Maze::createMaze()
                     startUp = rowHead;
             }
 
-            // Link horizontally (left-right)
+            // link horizontally (left-right)
             if (prevCol)
             {
                 prevCol->right = newCell;
@@ -33,7 +35,7 @@ void Maze::createMaze()
             }
             prevCol = newCell;
 
-            // Link vertically (up-down)
+            // link vertically (up-down)
             if (i > 0 && prevRow)
             {
                 Cell *above = prevRow;
@@ -52,6 +54,14 @@ void Maze::initializeMaze()
 {
     int playerX = randomNumberGenerator(1, size - 2);
     int playerY = randomNumberGenerator(1, size - 2);
+    int keyX, keyY;
+
+    // key in different location than the player
+    do
+    {
+        keyX = randomNumberGenerator(1, size - 2);
+        keyY = randomNumberGenerator(1, size - 2);
+    } while (playerX == keyX && playerY == keyY);
 
     for (int i = 0; i < size; i++)
     {
@@ -59,15 +69,19 @@ void Maze::initializeMaze()
         {
             if (i == 0 || i == size - 1 || j == 0 || j == size - 1)
             {
-                insertCell(i, j, '#');
+                insertCell(i, j, '#'); // wall
             }
             else if (i == playerX && j == playerY)
             {
-                insertCell(i, j, 'P');
+                insertCell(i, j, 'P'); // player
+            }
+            else if (i == keyX && j == keyY)
+            {
+                insertCell(i, j, 'K'); // key
             }
             else
             {
-                insertCell(i, j, '.');
+                insertCell(i, j, '.'); // empty
             }
         }
     }
@@ -98,93 +112,88 @@ void Maze::levelSet(int lvl)
     addExitDoor();
 }
 
-void Maze::placeEntity(char entity, int count)
+void Maze::place(char entity, int count)
 {
     for (int i = 0; i < count; i++)
     {
         int x = randomNumberGenerator(1, size - 2);
         int y = randomNumberGenerator(1, size - 2);
 
-        if (startUp->data != 'C' && startUp->data != 'P' && startUp->data != 'B' && startUp->data != 'K' && startUp->data != 'E')
+        // ensure the cell is empty
+        Cell *current = startUp;
+        for (int row = 0; row < x; row++)
+            current = current->down;
+
+        for (int col = 0; col < y; col++)
+            current = current->right;
+
+        if (current->data != 'C' && current->data != 'P' && current->data != 'B' && current->data != 'K' && current->data != 'E')
         {
-            insertCell(x, y, entity);
+            current->data = entity;
         }
         else
         {
-            i--;
-        }
-    }
-}
-
-void Maze::setCells()
-{
-    Cell *temp = startUp;
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size; j++)
-        {
-            if(temp->data == 'B')
-            {
-                temp->bomb = true;
-                insertCell(i, j, '.');
-            }
-            else if(temp->data == 'C')
-            {
-                temp->coin = true;
-            }
-            else if(temp->data == 'K')
-            {
-                temp->key = true;
-                insertCell(i, j, '.');
-            }
-            else if(temp->data == 'E')
-            {
-                temp->exit = true;
-                insertCell(i, j, '.');
-            }
+            i--; // retry
         }
     }
 }
 
 void Maze::addCoins()
 {
-    placeEntity('C', 5);
+    place('C', 5); // 5 coins
 }
 
 void Maze::addBombs()
 {
-    placeEntity('B', 2);
+    place('B', 2); // 2 bombs
 }
 
 void Maze::addKey()
 {
-    placeEntity('K', 1);
+    place('K', 1); // 1 key
 }
 
 void Maze::addExitDoor()
 {
-    placeEntity('E', 1);
+    place('E', 1); // 1 exit
 }
 
+// insert a cell with specified data into the maze
 void Maze::insertCell(int row, int col, char data)
 {
     Cell *current = startUp;
     for (int i = 0; i < row; i++)
     {
-        if (current->down != nullptr)
-            current = current->down;
+        current = current->down;
     }
     for (int j = 0; j < col; j++)
     {
-        if (current->right != nullptr)
-            current = current->right;
+        current = current->right;
     }
     current->data = data;
 }
 
 Cell *Maze::getStartUp()
 {
-    return this->startUp;
+    return startUp;
+}
+
+// Find the player's cell in the maze
+Cell *Maze::findPlayer()
+{
+    Cell *rowHead = startUp;
+    while (rowHead != nullptr)
+    {
+        Cell *colHead = rowHead;
+        while (colHead != nullptr)
+        {
+            if (colHead->data == 'P')
+                return colHead;
+            colHead = colHead->right;
+        }
+        rowHead = rowHead->down;
+    }
+    return nullptr; // Player not found
 }
 
 void Maze::printMaze()
@@ -197,12 +206,60 @@ void Maze::printMaze()
         int x = 0;
         while (col != nullptr)
         {
-            mvprintw(y, x, "%c", col->data);
+            mvaddch(y, x, col->data);
             col = col->right;
             x++;
         }
         row = row->down;
         y++;
     }
-    refresh();
+}
+
+// find the coordinates entities in the maze
+void Maze::findEntity(char entity, int &row, int &col)
+{
+    Cell *rowHead = startUp;
+    int currentRow = 0;
+
+    while (rowHead != nullptr)
+    {
+        Cell *colHead = rowHead;
+        int currentCol = 0;
+
+        while (colHead != nullptr)
+        {
+            if (colHead->data == entity)
+            {
+                row = currentRow;
+                col = currentCol;
+                return;
+            }
+            colHead = colHead->right;
+            currentCol++;
+        }
+        rowHead = rowHead->down;
+        currentRow++;
+    }
+
+    // if not found, set row and col to -1
+    row = -1;
+    col = -1;
+}
+
+// manhattan distance bw two entities
+int Maze::manhattanDistance(char entity1, char entity2)
+{
+    int row1, col1, row2, col2;
+
+    findEntity(entity1, row1, col1);
+
+    findEntity(entity2, row2, col2);
+
+    // if not found, return -1
+    if (row1 == -1 || row2 == -1 || col1 == -1 || col2 == -1)
+    {
+        return -1;
+    }
+
+    return abs(row1 - row2) + abs(col1 - col2);
 }

@@ -2,5 +2,6 @@
 *.exe
 *.vscode
 *.json
+test.cpp
 /build
 /cmake-build-debug

@@ -3,4 +3,6 @@
 
 int randomNumberGenerator(int x, int y);
 char toLowerCase(char c);
-#endif
+void abs(int &x);
+
+#endif // UTIL_H
