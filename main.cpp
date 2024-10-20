@@ -6,6 +6,25 @@
 #include "Player.h"
 #include "Stack.h"
 
+
+int lvlInput(int level)
+{
+    while (true)
+    {
+        char input = getch();
+        if (input >= '1' && input <= '3')
+        {
+            level = input - '0';
+            return level;
+        }
+        else
+        {
+            printw("Invalid level! Please enter 1, 2, or 3: \n");
+            refresh();
+        }
+    }
+}
+
 int main()
 {
     // Initialize ncurses and the maze
@@ -16,7 +35,10 @@ int main()
     keypad(stdscr, TRUE);
 
     Maze maze;
-    maze.levelSet(3);
+    int level;
+    printw("Enter maze level (1, 2, or 3): ");
+    refresh();
+    maze.levelSet(lvlInput(level));
 
     Player player;
 
