@@ -7,6 +7,7 @@ class Maze
 {
 private:
     int size;
+    int lvl;
     Cell *startUp, *endDown;
 
     void createMaze();
@@ -23,6 +24,7 @@ public:
     void levelSet(int lvl);
     void printMaze();
     Cell *getStartUp();
+    int getLevel();
     int manhattanDistance(char entity1, char entity2);
     void findEntity(char entity, int &row, int &col);
     Cell *findPlayer();

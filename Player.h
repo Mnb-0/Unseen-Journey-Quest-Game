@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "Maze.h"
 class Player
 {
 private:
@@ -18,6 +19,7 @@ public:
 
     int getUndos() const;
     void decrementUndos();
+    void setUndos(int newUndos);
 
     int getMoves() const;
     void decrementMoves();
@@ -30,6 +32,7 @@ public:
 
     // reset the player's status
     void reset();
+    void set(Maze &maze);
 };
 
 #endif // PLAYER_H

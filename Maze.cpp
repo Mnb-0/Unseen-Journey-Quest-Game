@@ -4,7 +4,7 @@
 #include "Maze.h"
 #include "Util.h"
 
-Maze::Maze() : size(0), startUp(nullptr), endDown(nullptr) {}
+Maze::Maze() : lvl(0),size(0), startUp(nullptr), endDown(nullptr) {}
 
 void Maze::createMaze()
 {
@@ -48,6 +48,11 @@ void Maze::createMaze()
         }
         prevRow = rowHead;
     }
+}
+
+int Maze::getLevel()
+{
+    return lvl;
 }
 
 void Maze::initializeMaze()
@@ -104,6 +109,7 @@ void Maze::levelSet(int lvl)
         printw("Invalid level\n");
         return;
     }
+    this->lvl = lvl;
     createMaze();
     initializeMaze();
     addCoins();

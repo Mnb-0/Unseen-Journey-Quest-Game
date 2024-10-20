@@ -21,12 +21,12 @@ Move Stack::pop()
 {
     if (isEmpty())
     {
-        return Move(-1, -1, ' '); //stack is empty
+        return Move(-1, -1, ' '); // stack is empty
     }
-    Node *temp = top;             
+    Node *temp = top;
     Move poppedMove = temp->move;
-    top = top->next;         
-    delete temp;          
+    top = top->next;
+    delete temp;
     return poppedMove;
 }
 
