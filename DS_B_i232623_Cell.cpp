@@ -23,19 +23,19 @@ Cell::Cell(char data)
 // right cell
 void Cell::moveRight()
 {
-    if(right->data == 'B')
+    if (right->data == 'B')
     {
         bomb = true;
     }
-    if(right->data == 'K')
+    if (right->data == 'K')
     {
         key = true;
     }
-    if(right->data == 'E')
+    if (right->data == 'E')
     {
         exit = true;
     }
-    if(right->data == 'C')
+    if (right->data == 'C')
     {
         coin = true;
     }
@@ -49,19 +49,19 @@ void Cell::moveRight()
 // left cell
 void Cell::moveLeft()
 {
-    if(left->data == 'B')
+    if (left->data == 'B')
     {
         bomb = true;
     }
-    if(left->data == 'K')
+    if (left->data == 'K')
     {
         key = true;
     }
-    if(left->data == 'E')
+    if (left->data == 'E')
     {
         exit = true;
     }
-    if(left->data == 'C')
+    if (left->data == 'C')
     {
         coin = true;
     }
@@ -76,19 +76,19 @@ void Cell::moveLeft()
 void Cell::moveUp()
 {
 
-    if(up->data == 'B')
+    if (up->data == 'B')
     {
         bomb = true;
     }
-    if(up->data == 'K')
+    if (up->data == 'K')
     {
         key = true;
     }
-    if(up->data == 'E')
+    if (up->data == 'E')
     {
         exit = true;
     }
-    if(up->data == 'C')
+    if (up->data == 'C')
     {
         coin = true;
     }
@@ -101,19 +101,19 @@ void Cell::moveUp()
 
 void Cell::moveDown()
 {
-    if(down->data == 'B')
+    if (down->data == 'B')
     {
         bomb = true;
     }
-    if(down->data == 'K')
+    if (down->data == 'K')
     {
         key = true;
     }
-    if(down->data == 'E')
+    if (down->data == 'E')
     {
         exit = true;
     }
-    if(down->data == 'C')
+    if (down->data == 'C')
     {
         coin = true;
     }

@@ -4,8 +4,9 @@
 #include "DS_B_i232623_Maze.h"
 #include "DS_B_i232623_Util.h"
 
-Maze::Maze() : lvl(0),size(0), startUp(nullptr), endDown(nullptr) {}
+Maze::Maze() : lvl(0), size(0), startUp(nullptr), endDown(nullptr) {}
 
+// maze creaion function
 void Maze::createMaze()
 {
     startUp = nullptr;
@@ -92,6 +93,7 @@ void Maze::initializeMaze()
     }
 }
 
+// initializer based on level
 void Maze::levelSet(int lvl)
 {
     switch (lvl)

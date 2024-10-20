@@ -37,4 +37,3 @@ int lvlInput(int level)
         }
     }
 }
-

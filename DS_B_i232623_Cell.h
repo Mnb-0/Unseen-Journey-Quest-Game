@@ -8,11 +8,11 @@ public:
     Cell *right, *left, *up, *down;
     bool exit, key, coin, bomb;
 
-    // Constructors
+    // constructors
     Cell();
     Cell(char data);
 
-    // Movement functions
+    // movement functions
     void moveRight();
     void moveLeft();
     void moveUp();

@@ -7,7 +7,7 @@
 #include "DS_B_i232623_Stack.h"
 #include "DS_B_i232623_Util.h"
 
-// Function to display the player's current status
+// function to display the player's current status
 void displayStatus(Player &player)
 {
     mvprintw(21, 0, "Key Status: %s", player.hasKeyStatus() ? "Obtained" : "Not Obtained");
@@ -18,13 +18,13 @@ void displayStatus(Player &player)
 
 int main()
 {
-    // Initialize ncurses and the maze
+    // initialize ncurses and the maze
     srand(static_cast<unsigned int>(time(0)));
-    initscr(); // initialize the screen
-    noecho(); //dont echo keypresses
-    cbreak(); // disable line buffering
-    keypad(stdscr, TRUE); //enable keypad
-    clear();  // clear the screen at the beginning
+    initscr();            // initialize the screen
+    noecho();             // don't echo key presses
+    cbreak();             // disable line buffering
+    keypad(stdscr, TRUE); // enable keypad
+    clear();              // clear the screen at the beginning
 
     Maze maze;
     int level;
@@ -38,8 +38,7 @@ int main()
     // main game loop for player movement
     int ch;
     Cell *playerCell = maze.findPlayer();
-    
-    // initial display of the maze
+
     clear();
     maze.printMaze();
     displayStatus(player);
@@ -47,12 +46,12 @@ int main()
 
     while ((ch = getch()) != 'q')
     {
-        Cell* nextCell = nullptr; // pointer for the next cell
+        Cell *nextCell = nullptr;
 
         switch (ch)
         {
         case 'w': // Move up
-            if (playerCell->up != nullptr)
+            if (playerCell->up != nullptr && playerCell->up->data != '#')
             {
                 nextCell = playerCell->up;
                 playerCell->moveUp();
@@ -60,8 +59,8 @@ int main()
                 player.decrementMoves();
             }
             break;
-        case 'a': // Move left
-            if (playerCell->left != nullptr)
+        case 'a':                                                             // Move left
+            if (playerCell->left != nullptr && playerCell->left->data != '#') // Check if the next cell is not a wall
             {
                 nextCell = playerCell->left;
                 playerCell->moveLeft();
@@ -69,8 +68,8 @@ int main()
                 player.decrementMoves();
             }
             break;
-        case 's': // Move down
-            if (playerCell->down != nullptr)
+        case 's':                                                             // Move down
+            if (playerCell->down != nullptr && playerCell->down->data != '#') // Check if the next cell is not a wall
             {
                 nextCell = playerCell->down;
                 playerCell->moveDown();
@@ -78,8 +77,8 @@ int main()
                 player.decrementMoves();
             }
             break;
-        case 'd': // Move right
-            if (playerCell->right != nullptr)
+        case 'd':                                                               // Move right
+            if (playerCell->right != nullptr && playerCell->right->data != '#') // Check if the next cell is not a wall
             {
                 nextCell = playerCell->right;
                 playerCell->moveRight();
@@ -91,7 +90,7 @@ int main()
             break;
         }
 
-        // check if the player collects a coin
+        // player collects a coin
         if (playerCell->coin)
         {
             player.setScore(player.getScore() + 2);
@@ -99,7 +98,7 @@ int main()
             playerCell->coin = false;
         }
 
-        // check game over conditions after moving
+        // game over conditions after moving
         if (playerCell->isBomb())
         {
             player.setAlive(false);
@@ -108,30 +107,29 @@ int main()
 
         if (player.getMoves() <= 0)
         {
-            // player has used all moves without reaching the exit
+            // all moves without reaching the exit
             player.setAlive(false);
             break;
         }
 
         if (playerCell->isExit() && player.hasKeyStatus())
         {
-            // player reached exit with the key
+            // reached exit with the key
             clear();
             printw("You win! You've reached the exit with the key!\n");
             break;
         }
 
-        // clear the screen and print the maze
         clear();
         maze.printMaze();
-        
-        // display player status
+
+        // player status
         displayStatus(player);
-        
+
         refresh();
     }
 
-    // Display Game Over message if the player is not alive or out of moves
+    // Game Over message if the player is not alive or out of moves
     clear();
     if (!player.isAlive() && player.getMoves() > 0)
     {
@@ -143,7 +141,7 @@ int main()
     }
 
     refresh();
-    getch(); // wait for user input before exiting
+    getch(); // wait for input before exitting
     endwin();
     return 0;
 }
