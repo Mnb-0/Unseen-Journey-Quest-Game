@@ -148,11 +148,11 @@ The project is organized as follows:
 ├── Cell.cpp           # Cell class representing each maze cell
 ├── Stack.cpp          # Stack class for undo operations
 ├── Util.cpp           # Utility functions (e.g., random generation)
-├── include/
-│   ├── Maze.h         # Header for Maze class
-│   ├── Player.h       # Header for Player class
-│   ├── Cell.h         # Header for Cell class
-│   ├── Stack.h        # Header for Stack class
-│   └── Util.h         # Header for utility functions
+├── Maze.h             # Header for Maze class
+├── Player.h           # Header for Player class
+├── Cell.h             # Header for Cell class
+├── Stack.h            # Header for Stack class
+├── Util.h             # Header for utility functions
 └── README.md          # Project documentation
+
 ```
