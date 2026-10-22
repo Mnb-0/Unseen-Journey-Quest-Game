@@ -60,7 +60,7 @@ This section explains how to install the necessary dependencies and set up the p
 
 3. Compile the project:
    ```bash
-   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp -lncurses -o maze_game
+   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp Util.cpp -lncurses -o maze_game
    ```
 
 4. Run the game:
@@ -83,7 +83,7 @@ This section explains how to install the necessary dependencies and set up the p
 
 3. Compile the project:
    ```bash
-   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp -lncurses -o maze_game
+   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp Util.cpp -lncurses -o maze_game
    ```
 
 4. Run the game:
@@ -116,7 +116,7 @@ If you're using WSL2 on Windows, follow these steps to set up the project.
 
 3. Compile the project:
    ```bash
-   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp -lncurses -o maze_game
+   g++ main.cpp Maze.cpp Cell.cpp Player.cpp Stack.cpp Util.cpp -lncurses -o maze_game
    ```
 
 4. Run the game:
